@@ -11,6 +11,13 @@ namespace Core.StatSystem
         [field: SerializeField] public float Duration { get; private set; }
         
         public float StartTime { get; }
+
+        public StatModificator(Stat stat, StatModificatorType type, float duration)
+        {
+            Stat = stat;
+            Type = type;
+            Duration = duration;
+        }
         
         public StatModificator(Stat stat, StatModificatorType type, float duration, float startTime)
         {
@@ -18,6 +25,12 @@ namespace Core.StatSystem
             Type = type;
             Duration = duration;
             StartTime = startTime;
+        }
+
+        public StatModificator GetReverseModificator()
+        {
+            var reverseStat = new Stat(Stat.Type, Type == StatModificatorType.Additive ? -Stat : 1 / Stat);
+            return new StatModificator(reverseStat, Type, Duration);
         }
     }
 }
