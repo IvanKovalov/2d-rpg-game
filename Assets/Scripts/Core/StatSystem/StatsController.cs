@@ -56,7 +56,7 @@ namespace Core.StatSystem
                 return;
 
             var expiredModificator =
-                _activeModificators.Where(modificator => modificator.StartTime + modificator.Duration >= Time.time);
+                _activeModificators.Where(modificator => modificator.StartTime + modificator.Duration <= Time.time);
 
             foreach (var modificator in expiredModificator)
             {
