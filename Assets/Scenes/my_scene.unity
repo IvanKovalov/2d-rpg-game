@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
+  m_IndirectSpecularColor: {r: 0.3731193, g: 0.3807401, b: 0.358727, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -387,6 +387,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &59571404
 GameObject:
   m_ObjectHideFlags: 0
@@ -3996,6 +3997,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1177877178
 GameObject:
   m_ObjectHideFlags: 0
@@ -4498,7 +4500,7 @@ MonoBehaviour:
   _rarityDescriptorsStorage: {fileID: 11400000, guid: 16e63fafee23308449cd53de052e161b, type: 2}
   _whatIsPlayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 0
   _itemStorage: {fileID: 11400000, guid: 61ed177250e29014aac0f99ab48330cc, type: 2}
 --- !u!4 &1275976914
 Transform:
@@ -4922,7 +4924,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000030517578, y: 3844.5806}
+  m_AnchoredPosition: {x: 0.000030517578, y: 88075.95}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1429553762
@@ -5307,6 +5309,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!50 &1530330917
 Rigidbody2D:
   serializedVersion: 4

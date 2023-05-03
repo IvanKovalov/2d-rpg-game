@@ -25,7 +25,7 @@ namespace Items
             _player = player;
             Equipment = equipment ?? new List<Equipment>();
            //BackPackItems = new List<Item>();
-           BackPackItems = backPackItems;
+           BackPackItems = backPackItems ?? new List<Item>();
             for (int i = 0; i < InventorySize; i++)
                 BackPackItems.Add(null);
         }

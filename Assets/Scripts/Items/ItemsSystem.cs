@@ -19,7 +19,7 @@ namespace Items
         
         private ItemsFactory _itemsFactory;
 
-        public ItemsSystem(List<IItemRarityColor> colors, LayerMask whatIsPlayer, ItemsFactory itemsFactory /*Inventory inventory*/)
+        public ItemsSystem(List<IItemRarityColor> colors, LayerMask whatIsPlayer, ItemsFactory itemsFactory, Inventory inventory)
         {
             _sceneItem = Resources.Load<SceneItem>($"{nameof(ItemsSystem)}/{nameof(SceneItem)}");
             _itemsOnScene = new Dictionary<SceneItem, Item>();
@@ -29,7 +29,7 @@ namespace Items
             _colors = colors;
             _whatIsPlayer = whatIsPlayer;
             _itemsFactory = itemsFactory;
-            _inventory = null; // ADD INVENTORY FROM PARAMETERS LATER***********************************
+            _inventory = inventory;
             _inventory.ItemDropped += DropItem;
         }
 
