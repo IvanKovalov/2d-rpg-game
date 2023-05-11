@@ -31,3 +31,6 @@ MonoBehaviour:
   - <ItemRarity>k__BackingField: 5
     <Sprite>k__BackingField: {fileID: 21300000, guid: 89064b64789adf44c95d91f195d43a23, type: 3}
     <Color>k__BackingField: {r: 1, g: 0.93226594, b: 0, a: 0}
+  - <ItemRarity>k__BackingField: 0
+    <Sprite>k__BackingField: {fileID: 21300000, guid: a569a5f6afddaa34a9757d84bb77e9a1, type: 3}
+    <Color>k__BackingField: {r: 0.20392159, g: 0.20392159, b: 0.20392159, a: 0}

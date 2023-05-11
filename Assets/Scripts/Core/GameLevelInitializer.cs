@@ -9,6 +9,7 @@ using Items;
 using Items.Data;
 using Items.Rarity;
 using Items.Storage;
+using UI;
 
 namespace Core
 {
@@ -25,6 +26,7 @@ namespace Core
         private ProjectUpdater _projectUpdater;
         private ItemsSystem _itemsSystem;
         private DropGenerator _dropGenerator;
+        private UIContext _uiContext;
 
         private List<IDisposable> _disposables;
 
@@ -54,17 +56,28 @@ namespace Core
 
             ItemsFactory itemsFactory = new ItemsFactory(_playerSystem.StatsController);
             List<IItemRarityColor> rarityColors = _rarityDescriptorsStorage.RarityDescriptors.Cast<IItemRarityColor>().ToList();
-            _itemsSystem = new ItemsSystem(rarityColors, _whatIsPlayer, itemsFactory);
+            _itemsSystem = new ItemsSystem(rarityColors, _whatIsPlayer, itemsFactory, _playerSystem.Inventory);
             List<ItemDescriptor> descriptors =
                 _itemStorage.ItemScriptables.Select(scriptable => scriptable.ItemDescriptor).ToList();
             _dropGenerator = new DropGenerator(descriptors, _playerEntity, _itemsSystem);
+
+            UIContext.Data data =
+                new UIContext.Data(_playerSystem.Inventory, _rarityDescriptorsStorage.RarityDescriptors);
+            _uiContext = new UIContext(new List<IWindowsInputSource>()
+            {
+                _gameUIInputView,
+                _externalDevicesInput
+            }, data);
 
         }
         
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Escape))
-                _projectUpdater.IsPaused = !_projectUpdater.IsPaused;
+            {
+                _uiContext.CloserCurrentScreen();
+                //_projectUpdater.IsPaused = !_projectUpdater.IsPaused;
+            }
         }
 
         private void OnDestroy()
