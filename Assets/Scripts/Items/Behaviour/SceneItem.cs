@@ -2,7 +2,7 @@ using System;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using Button = UnityEngine.UI.Button;
 using Random = UnityEngine.Random;
 
 namespace Items.Behaviour

@@ -1,4 +1,5 @@
 ﻿using System;
+using Core.Animations;
 using Spine.Unity;
 using UnityEngine;
 
@@ -17,6 +18,16 @@ namespace Player.PlayerAnimations
         private void Start()
         {
             _skeletonAnimation = GetComponent<SkeletonAnimation>();
+        }
+
+        public override void Initialize()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void SetAnimationParameter(string parameter, int value)
+        {
+            throw new NotImplementedException();
         }
 
         protected override void PlayAnimation(AnimationType animationType)

@@ -8,12 +8,12 @@ namespace Player
 {
     public class PlayerBrain : IDisposable
     {
-        private readonly PlayerEntity _playerEntity;
+        private readonly PlayerEntityBehavior playerEntityBehavior;
         private readonly List<IEntityInputSource> _inputSources;
 
-        public PlayerBrain(PlayerEntity playerEntity, List<IEntityInputSource> inputSources)
+        public PlayerBrain(PlayerEntityBehavior playerEntityBehavior, List<IEntityInputSource> inputSources)
         {
-            _playerEntity = playerEntity;
+            this.playerEntityBehavior = playerEntityBehavior;
             _inputSources = inputSources;
             ProjectUpdater.Instance.FixedUpdateCalled += OnFixedUpdate;
         }
@@ -22,14 +22,14 @@ namespace Player
 
         private void OnFixedUpdate()
         {
-            _playerEntity.MoveHorizontally(GetHorizontalDirection());
-            _playerEntity.MoveVertically(GetVerticalDirection());
+            playerEntityBehavior.MoveHorizontally(GetHorizontalDirection());
+            playerEntityBehavior.MoveVertically(GetVerticalDirection());
             
             if(IsJump)
-                _playerEntity.Jump();
+                playerEntityBehavior.Jump();
 
             if (IsAttack)
-                _playerEntity.StartAttck();
+                playerEntityBehavior.StartAttck();
 
             foreach (var inputSource in _inputSources)
             {

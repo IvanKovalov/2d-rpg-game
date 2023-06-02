@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+
 namespace InputReader
 {
     public class GameUIInputView : MonoBehaviour, IEntityInputSource, IWindowsInputSource

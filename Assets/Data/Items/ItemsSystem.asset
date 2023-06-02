@@ -14,22 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <RarityDescriptors>k__BackingField:
   - <ItemRarity>k__BackingField: 1
-    <Sprite>k__BackingField: {fileID: 21300000, guid: 603e026921ee6c44ab5c48b149bb31e9, type: 3}
+    <Sprite>k__BackingField: {fileID: 21300000, guid: 9ea041d0d0e80eb4295e2722f865fc40, type: 3}
     <Color>k__BackingField: {r: 1, g: 1, b: 1, a: 0}
   - <ItemRarity>k__BackingField: 2
-    <Sprite>k__BackingField: {fileID: 21300000, guid: f85b31371da4cec40a86dbba0b9befa6, type: 3}
+    <Sprite>k__BackingField: {fileID: 21300000, guid: b5a921ed82199eb468ac2feaf0279642, type: 3}
     <Color>k__BackingField: {r: 0.068752214, g: 0.27881357, b: 0.9716981, a: 0}
   - <ItemRarity>k__BackingField: 2
-    <Sprite>k__BackingField: {fileID: 21300000, guid: c2dcd477646d9024f91ebe4cd4c49e03, type: 3}
+    <Sprite>k__BackingField: {fileID: 21300000, guid: b5a921ed82199eb468ac2feaf0279642, type: 3}
     <Color>k__BackingField: {r: 0.004538993, g: 0.36259127, b: 0.9622642, a: 0}
   - <ItemRarity>k__BackingField: 3
-    <Sprite>k__BackingField: {fileID: 21300000, guid: 0f62342fef8e8a341b4579680dbfbe6f, type: 3}
+    <Sprite>k__BackingField: {fileID: 21300000, guid: bbaf787d49e4fab4cb18011223844c07, type: 3}
     <Color>k__BackingField: {r: 0.9716981, g: 0.49754867, b: 0, a: 0}
   - <ItemRarity>k__BackingField: 4
-    <Sprite>k__BackingField: {fileID: 21300000, guid: fb282987f1a8d854abe31fdea956eb6d, type: 3}
+    <Sprite>k__BackingField: {fileID: 21300000, guid: 87de696b831202e4da2a95c1026502f3, type: 3}
     <Color>k__BackingField: {r: 0.81197834, g: 0, b: 0.8396226, a: 0}
   - <ItemRarity>k__BackingField: 5
-    <Sprite>k__BackingField: {fileID: 21300000, guid: 89064b64789adf44c95d91f195d43a23, type: 3}
+    <Sprite>k__BackingField: {fileID: 21300000, guid: a3de0decc2462a24292e43d2aafee8d3, type: 3}
     <Color>k__BackingField: {r: 1, g: 0.93226594, b: 0, a: 0}
   - <ItemRarity>k__BackingField: 0
     <Sprite>k__BackingField: {fileID: 21300000, guid: a569a5f6afddaa34a9757d84bb77e9a1, type: 3}

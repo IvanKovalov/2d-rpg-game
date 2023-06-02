@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Player;
+using UnityEngine;
 
-namespace Player.PlayerAnimations
+namespace Core.Animations
 {
     [RequireComponent(typeof(Animator))]
     public class UnityAnimatorController : AnimatorController
@@ -10,6 +11,10 @@ namespace Player.PlayerAnimations
         {
             _animator = GetComponent<Animator>();
         }
+
+        public override void Initialize() => _animator = GetComponent<Animator>();
+        public override void SetAnimationParameter(string parameter, int value) => 
+            _animator.SetInteger(parameter, value);
 
         protected override void PlayAnimation(AnimationType animationType)
         {

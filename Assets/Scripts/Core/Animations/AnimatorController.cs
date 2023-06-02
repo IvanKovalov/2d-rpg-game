@@ -1,7 +1,8 @@
 ﻿using System;
+using Player;
 using UnityEngine;
 
-namespace Player.PlayerAnimations
+namespace Core.Animations
 {
     public abstract class AnimatorController : MonoBehaviour
     {
@@ -11,6 +12,8 @@ namespace Player.PlayerAnimations
         public event Action ActionRequested;
         public event Action AnimationEnded;
         
+        private Action _animationAction;
+        private Action _animationEndAction;
         public bool PlayAnimation(AnimationType animationType, bool active)
         {
             if (!active)
@@ -34,9 +37,44 @@ namespace Player.PlayerAnimations
             return true;
         }
         
+        public abstract void Initialize();
+
+        public bool SetAnimationState(AnimationType animationType, bool active, Action animationAction = null, Action endAnimationAction = null)
+        {
+            if (!active)
+            {
+                if (_currentAnimationType == AnimationType.Idle || _currentAnimationType != animationType)
+                    return false;
+                _animationAction = null;
+                _animationEndAction = null;
+                OnAnimationEnded();
+                return false;
+            }
+
+            if (_currentAnimationType >= animationType)
+                return false;
+
+            _animationAction = animationAction;
+            _animationEndAction = endAnimationAction;
+            SetAnimation(animationType);
+            return true;
+        }
+        
+        public abstract void SetAnimationParameter(string parameter, int value);
+
+        private void SetAnimation(AnimationType animationType)
+        {
+            _currentAnimationType = animationType;
+            PlayAnimation(_currentAnimationType);
+        }
+        
         protected abstract void PlayAnimation(AnimationType animationType);
 
         protected void OnActionRequested() => ActionRequested?.Invoke();
-        protected void OnAnimationEnded() => AnimationEnded?.Invoke();
+        protected void OnAnimationEnded()
+        {
+            _animationEndAction?.Invoke();
+            SetAnimation(AnimationType.Idle);
+        }
     }
 }
