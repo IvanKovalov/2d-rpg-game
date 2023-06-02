@@ -1,16 +1,19 @@
 using System;
 using Core.Services.Updater;
 using InputReader;
-using Player;
 using UnityEngine;
 
-public class ExternalDevicesInputReader : IEntityInputSource, IDisposable
+public class ExternalDevicesInputReader : IEntityInputSource, IWindowsInputSource,  IDisposable
 {
     
     public float HorizontalDirection => Input.GetAxisRaw("Horizontal");
     public float VerticalDirection => Input.GetAxisRaw("Vertical");
     public bool Jump { get; private set; }
     public bool Attack { get; private set; }
+    
+    public event Action InventoryRequested;
+    public event Action SkillWindowRequested;
+    public event Action SettingsWindowRequested;
 
     public ExternalDevicesInputReader()
     {
@@ -37,6 +40,12 @@ public class ExternalDevicesInputReader : IEntityInputSource, IDisposable
 
         if (Input.GetKeyDown("left ctrl"))
             Attack = true;
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            InventoryRequested?.Invoke();
+        }
+        
         
     }
 
@@ -45,6 +54,6 @@ public class ExternalDevicesInputReader : IEntityInputSource, IDisposable
         _playerEntity.MoveVertically(_verticalDirection);
     }*/
 
-   
+
 
 } 

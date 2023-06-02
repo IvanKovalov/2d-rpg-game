@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace InputReader
 {
-    public class GameUIInputView : MonoBehaviour, IEntityInputSource
+    public class GameUIInputView : MonoBehaviour, IEntityInputSource, IWindowsInputSource
     {
         [SerializeField] private Joystick _joystick;
         [SerializeField] private Button _jumpButton;
@@ -16,6 +16,10 @@ namespace InputReader
         
         public bool Jump { get; private set; }
         public bool Attack { get; private set; }
+        
+        public event Action InventoryRequested;
+        public event Action SkillWindowRequested;
+        public event Action SettingsWindowRequested;
 
         private void Awake()
         {
@@ -34,5 +38,7 @@ namespace InputReader
             Jump = false;
             Attack = false;
         }
+
+   
     }
 }
