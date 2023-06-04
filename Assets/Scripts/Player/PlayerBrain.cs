@@ -17,17 +17,34 @@ namespace Player
         private StatsController _statsController;
 
         private float _hp;
+        private bool _isAttacking;
+        private bool _canAttack;
+        
         public event Action<PlayerBrain> ObjectDied;
 
         public PlayerBrain(PlayerEntityBehavior playerEntityBehavior, List<IEntityInputSource> inputSources, StatsController statsController)
         {
             this.playerEntityBehavior = playerEntityBehavior;
+            this.playerEntityBehavior.AttackEnded += EndAttack;
+            this.playerEntityBehavior.AttackRequested += OnAttackRequested;
             _inputSources = inputSources;
             _statsController = statsController;
             _hp = statsController.GetStatValue(StatType.Health);
             this.playerEntityBehavior.DamageTaken += OnDamageTaken;
             VisualiseHp(statsController.GetStatValue(StatType.Health));
             ProjectUpdater.Instance.FixedUpdateCalled += OnFixedUpdate;
+        }
+
+        private void OnAttackRequested()
+        {
+            //Attack
+        }
+
+        private void EndAttack()
+        {
+            _isAttacking = false;
+            ProjectUpdater.Instance.Invoke(()=>
+                _canAttack = true, _statsController.GetStatValue(StatType.AfterAttackDelay));
         }
 
         private void OnDamageTaken(float damage)
@@ -52,14 +69,21 @@ namespace Player
 
         private void OnFixedUpdate()
         {
+            if (_isAttacking)
+                return;
+            
             playerEntityBehavior.MoveHorizontally(GetHorizontalDirection());
             playerEntityBehavior.MoveVertically(GetVerticalDirection());
             
             if(IsJump)
                 playerEntityBehavior.Jump();
 
-            if (IsAttack)
+            if (IsAttack && _canAttack)
+            {
                 playerEntityBehavior.StartAttck();
+                _isAttacking = true;
+                _canAttack = false;
+            }
 
             foreach (var inputSource in _inputSources)
             {

@@ -34,8 +34,9 @@ public class PlayerEntityBehavior : MonoBehaviour, ILevelGraphicElement, IDamage
     private event Action AnimationEnded;
     public event Action<float> DamageTaken;
     public event Action<ILevelGraphicElement> VerticalPositionChanged;
-   
 
+    public event Action AttackRequested;
+    public event Action AttackEnded;
 
  
     // Start is called before the first frame update
@@ -114,10 +115,6 @@ public class PlayerEntityBehavior : MonoBehaviour, ILevelGraphicElement, IDamage
 
     public void StartAttck()
     {
-        if (!PlayAnimation(AnimationType.Attack, true))
-        {
-            return;
-        }
         ActionRequested += Attack;
         AnimationEnded += EndAttack;
     }
@@ -127,16 +124,14 @@ public class PlayerEntityBehavior : MonoBehaviour, ILevelGraphicElement, IDamage
     protected void OnActionRequested() => ActionRequested?.Invoke();
     protected void OnAnimationEnded() => AnimationEnded?.Invoke();
 
-    private void Attack()
-    {
-        Debug.Log("Attack");
-    }
+    private void Attack() => AttackRequested?.Invoke();
     
     private void EndAttack()
     {
         ActionRequested -= Attack;
         AnimationEnded -= EndAttack;
         PlayAnimation(AnimationType.Attack, false);
+        AttackEnded?.Invoke();
     }
     
     private void Update() {
