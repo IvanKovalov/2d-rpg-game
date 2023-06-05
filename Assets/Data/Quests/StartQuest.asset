@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1db39d77a60408cac09574a20760a05, type: 3}
+  m_Name: StartQuest
+  m_EditorClassIdentifier: 
+  _textDescription: First Quest!
+  <QuestId>k__BackingField: 1
+  <Steps>k__BackingField:
+  - <StepDescription>k__BackingField: Kill knight
+    <TokenId>k__BackingField: Knight
+    <Amount>k__BackingField: 3
+  <Reward>k__BackingField:
+    <Items>k__BackingField:
+    - <ItemId>k__BackingField: 4
+      <Amount>k__BackingField: 3
+    <Stats>k__BackingField:
+    - <Stat>k__BackingField:
+        <Type>k__BackingField: 4
+        <Value>k__BackingField: 10
+      <Type>k__BackingField: 0
+      <Duration>k__BackingField: 0

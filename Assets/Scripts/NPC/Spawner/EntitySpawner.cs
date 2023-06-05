@@ -11,13 +11,15 @@ namespace NPC.Spawner
     public class EntitySpawner : IDisposable
     {
         private readonly LevelDrawer _levelDrawer;
-        private readonly List<Entity> _entities;
+        private readonly Dictionary<Entity, EntityId> _entities;
         private readonly EntitiesFactory _entitiesFactory;
-        
+
+        public event Action<EntityId> EntityDied; 
+
         public EntitySpawner(LevelDrawer levelDrawer)
         {
             _levelDrawer = levelDrawer;
-            _entities = new List<Entity>();
+            _entities = new Dictionary<Entity, EntityId>();
             var entitiesSpawnerDataStorage = Resources.Load<EntitiesSpawnerDataStorage>($"{nameof(EntitySpawner)}/{nameof(EntitiesSpawnerDataStorage)}");
             _entitiesFactory = new EntitiesFactory(entitiesSpawnerDataStorage);
         }
@@ -27,18 +29,19 @@ namespace NPC.Spawner
             var entity = _entitiesFactory.GetEntityBrain(entityId, position);
             entity.ObjectDied += RemoveEntity;
             _levelDrawer.RegisterElement(entity);
-            _entities.Add(entity);
+            _entities.Add(entity, entityId);
         }
 
         public void Dispose()
         {
-            foreach(var entity in _entities)
+            foreach(var entity in _entities.Keys)
                 DestroyEntity(entity);
             _entities.Clear();
         }
 
         private void RemoveEntity(Entity entity)
         {
+            EntityDied?.Invoke(_entities[entity]);
             _entities.Remove(entity);
             DestroyEntity(entity);
         }
@@ -47,6 +50,7 @@ namespace NPC.Spawner
         {
             _levelDrawer.UnregisterElement(entity);
             entity.ObjectDied -= RemoveEntity;
+            entity.Dispose();
         }
     }
 }

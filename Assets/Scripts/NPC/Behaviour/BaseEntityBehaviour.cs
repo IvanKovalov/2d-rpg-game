@@ -29,6 +29,7 @@ namespace NPC.Behaviour
         public virtual void Initialize()
         {
             Rigidbody = GetComponent<Rigidbody2D>();
+            DirectionalMover = new PositionMover(Rigidbody);
         }
 
         public float VerticalPosition => transform.position.y;
