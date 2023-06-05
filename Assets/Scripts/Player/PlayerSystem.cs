@@ -31,7 +31,7 @@ namespace Player
             _playerBrain = new PlayerBrain(this.playerEntityBehavior, inputSources, StatsController);
             _disposables.Add(_playerBrain);
 
-            Inventory = new Inventory(null, null, this.playerEntityBehavior.transform);
+            Inventory = new Inventory(null, null, this.playerEntityBehavior.transform, new EquipmentConditionChecker());
         }
 
         public void Dispose()

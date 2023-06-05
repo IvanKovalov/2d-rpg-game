@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Items;
 using Items.Core;
 using Items.Data;
 using Items.Enums;
+using Spine;
 using UI.Core;
 using UI.InventoryUI.Element;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 namespace UI.InventoryUI
 {
@@ -19,6 +23,9 @@ namespace UI.InventoryUI
         private readonly EquipmentConditionChecker _equipmentConditionChecker;
 
         private readonly Sprite _emptyBackgroundSprite;
+        private ItemSlot _focusedSlot;
+        private Item _movingItem;
+        private float _slotClickTime;
         
 
         public InventoryScreenAdapter(InventoryScreenView view, Inventory inventory, List<RarityDescriptor> rarityDescriptors) : base(view)
@@ -35,40 +42,36 @@ namespace UI.InventoryUI
 
         public override void Initialize()
         {
-            View.MovingImage.gameObject.SetActive(true);
+            View.MovingImage.gameObject.SetActive(false);
             InitializeBackPack();
             InitializeEquipment();
             _inventory.BackPackChanged += UpdateBackpack;
             _inventory.EquipmentCnahged += UpdateEquipment;
-            View.Show();
-            View.CloseClicked += Complete;
+            base.Initialize();
         }
 
         public override void Complete()
         {
-            View.Hide();
             ClearBackPack();
             ClearEquipment();
             _inventory.BackPackChanged -= UpdateBackpack;
             _inventory.EquipmentCnahged -= UpdateEquipment;
-            View.CloseClicked -= Complete;
+            base.Complete();
         }
 
         private void InitializeBackPack()
         {
             var backPack = View.ItemSlots;
-            Debug.Log(backPack.Count);
-            for (int i = 0; i < backPack.Count; i++)
+            for (int i = 0; i < Inventory.InventorySize; i++)
             {
                 var slot = backPack[i];
+               
                 var item = _inventory.BackPackItems[i];
                 _backPackSlots.Add(slot, item);
 
-                if (item == null)
-                {
-                    slot.ClearItem(GetBackSprite(ItemRarity.None));
-                    continue; 
-                }
+                if (item == null) 
+                    continue;
+                
                 slot.SetItem(item.Descriptor.ItemSprite, GetBackSprite(item.Descriptor.ItemRarity), item.Amount);
                 SubscribeToSlotEvents(slot);
             }
@@ -93,7 +96,7 @@ namespace UI.InventoryUI
 
                 if (item == null)
                 {
-                    slot.ClearItem(GetBackSprite(ItemRarity.None));
+                    //slot.ClearItem(GetBackSprite(ItemRarity.None));
                     continue;
                 }
 
@@ -108,10 +111,105 @@ namespace UI.InventoryUI
         {
             slot.SlotClicked += UseSlot;
             slot.SlotClearClicked += ClearSlot;
+
+            slot.SlotClickedDown += OnSlotDown;
+            slot.DragStarted += OnDragStarted;
+            slot.Dragged += OnDragged;
+            slot.DragEnded += DragEnded;
+        }
+
+        private void DragEnded(ItemSlot slot, Vector2 position)
+        {
+            if (_focusedSlot != slot)
+            {
+                return;
+            }
+
+            var item = _movingItem;
+            _focusedSlot = null;
+            _movingItem = null;
+            View.MovingImage.gameObject.SetActive(false);
+            slot.SetItem(item.Descriptor.ItemSprite, GetBackSprite(item.Descriptor.ItemRarity), item.Amount);
+
+            if (!TryGetSlotOnPosition(position, out var anotherSlot))
+            {
+                return;
+            }
+
+            switch (anotherSlot)
+            {
+                case EquipmentSlot when slot is EquipmentSlot:
+                    return;
+                case EquipmentSlot:
+                    _inventory.TryEquip(item);
+                    return;
+                default:
+                {
+                    var newPlace = _backPackSlots.Keys.ToList().IndexOf(anotherSlot);
+                    _inventory.MoveItemToPositionBackPack(item, newPlace);
+                    break;
+                }
+            }
+        }
+
+        private bool TryGetSlotOnPosition(Vector2 position, out ItemSlot itemSlot)
+        {
+            itemSlot = null;
+            PointerEventData pointerEventData = new PointerEventData(EventSystem.current)
+                { position = position };
+            List<RaycastResult> results = new List<RaycastResult>();
+           EventSystem.current.RaycastAll(pointerEventData, results);
+            if (results.Count < 1)
+            {
+                return false;
+            }
+
+            foreach (var result in results)
+            {
+                if (result.gameObject.TryGetComponent(out itemSlot))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void OnDragged(ItemSlot slot, Vector2 position)
+        {
+            if (_focusedSlot != slot)
+            {
+                return;
+            }
+
+            View.MovingImage.rectTransform.position = position;
+        }
+
+        private void OnDragStarted(ItemSlot slot)
+        {
+            if (_focusedSlot != slot)
+            {
+                return;
+            }
+            
+            slot.ClearItem(_emptyBackgroundSprite);
+            TryGetItem(slot, out _movingItem);
+            View.MovingImage.gameObject.SetActive(true);
+            View.MovingImage.sprite = _movingItem.Descriptor.ItemSprite;
+        }
+
+        private void OnSlotDown(ItemSlot slot)
+        {
+            if (_focusedSlot != null)
+            {
+                return;
+            }
+
+            _focusedSlot = slot;
         }
 
         private Sprite GetBackSprite(ItemRarity rarity) =>
-            _rarityDescriptors.Find(desriptor => desriptor.ItemRarity == rarity).Sprite;
+            _rarityDescriptors.Find(descriptor => descriptor.ItemRarity == rarity).Sprite;
 
         private void UpdateBackpack()
         {
@@ -127,48 +225,26 @@ namespace UI.InventoryUI
 
         private void UseSlot(ItemSlot slot)
         {
-            Equipment equipment;
-            if (slot is EquipmentSlot equipmentSlot && _inventory.BackPackItems.Any(element => element == null))
+            if (slot == _focusedSlot)
             {
-                equipment = _equipmentSlots[equipmentSlot];
-                _inventory.UnEquip(equipment, false);
-                _inventory.AddItemToBackPack(equipment);
-                equipment?.Use();
-                return;
+                if (TryGetItem(slot, out var item))
+                    _inventory.UseItem(item);
             }
 
-            Item item = _backPackSlots[slot];
+            _focusedSlot = null;
+        }
 
-            if (item is Potion potion)
+        private bool TryGetItem(ItemSlot slot, out Item item)
+        {
+            item = null;
+            if (slot is EquipmentSlot equipmentSlot)
             {
-                potion.Use();
-                if(potion.Amount <= 0)
-                    _inventory.RemoveFromBackpack(item, false);
-                
-                return;
+                item = _equipmentSlots[equipmentSlot];
+                return item != null;
             }
 
-            if (item is not Equipment equip)
-                return;
-
-            equipment = equip;
-            
-            if(!_equipmentConditionChecker.IsEquipmentConditionFits(equipment, _inventory.Equipment) 
-               || !_equipmentConditionChecker.TryReplaceEquipment(equipment, _inventory.Equipment, out var prevEquipment))
-                return;
-            
-            _inventory.RemoveFromBackpack(equipment, false);
-
-            if (prevEquipment != null)
-            {
-                _inventory.AddItemToBackPack(prevEquipment);
-                prevEquipment.Use();
-            }
-            
-            _inventory.Equip(equipment);
-            //slot.SetItem(equipment.Descriptor.ItemSprite, GetBackSprite(equipment.Descriptor.ItemRarity), 0);
-            equipment.Use();
-           
+            item = _backPackSlots[slot];
+            return item != null;
         }
 
         private void ClearSlot(ItemSlot slot)
@@ -206,7 +282,11 @@ namespace UI.InventoryUI
         {
             slot.SlotClicked -= UseSlot;
             slot.SlotClearClicked -= ClearSlot;
+            
+            slot.SlotClickedDown -= OnSlotDown;
+            slot.DragStarted -= OnDragStarted;
+            slot.Dragged -= OnDragged;
+            slot.DragEnded -= DragEnded;
         }
-        
     }
 }

@@ -1,11 +1,12 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace UI.InventoryUI.Element
 {
-    public class ItemSlot : MonoBehaviour
+    public class ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
     {
         [SerializeField] private Image _itemBack;
         [SerializeField] private Image _emptyImage;
@@ -16,12 +17,26 @@ namespace UI.InventoryUI.Element
 
         public event Action<ItemSlot> SlotClearClicked;
         public event Action<ItemSlot> SlotClicked;
+        public event Action<ItemSlot> SlotClickedDown;
+        public event Action<ItemSlot> DragStarted;
+        public event Action<ItemSlot, Vector2> Dragged;
+        public event Action<ItemSlot, Vector2> DragEnded;
 
         private void Awake()
         {
             ClearButton.onClick.AddListener((() => SlotClearClicked.Invoke(this)));
             _slotButton.onClick.AddListener((() => SlotClicked.Invoke(this)));
         }
+        
+        public void OnPointerDown(PointerEventData eventData) => SlotClickedDown?.Invoke(this);
+
+        public void OnBeginDrag(PointerEventData eventData) => DragStarted?.Invoke(this);
+
+        public void OnDrag(PointerEventData eventData) => Dragged?.Invoke(this, eventData.position);
+        
+        public void OnEndDrag(PointerEventData eventData) => DragEnded?.Invoke(this, eventData.position);
+
+        public void OnPointerClick(PointerEventData eventData) => SlotClicked?.Invoke(this);
 
         public void SetItem(Sprite iconSprite, Sprite itemBackSprite, int amount)
         {
@@ -53,6 +68,5 @@ namespace UI.InventoryUI.Element
             ClearButton.onClick.RemoveAllListeners();
             _slotButton.onClick.RemoveAllListeners();
         }
-        
     }
 }
