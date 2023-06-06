@@ -9,6 +9,7 @@ using Core.StatSystem.Enums;
 using InputReader;
 using Items;
 using Items.Core;
+using Items.Enums;
 using UnityEngine;
 
 namespace Player
@@ -93,7 +94,7 @@ namespace Player
       if (IsAttack && _canAttack)
       {
         Equipment weapon;
-        weapon = _inventory.Equipment.Find(element => element.IsWeapon());
+        weapon = _inventory.Equipment.Find(element => element.EquipmentType == EquipmentType.RightHand);
         if (weapon != null)
         {
           _currWeapon = _weaponsFactory.GetWeapon(weapon.Descriptor.ItemId);
