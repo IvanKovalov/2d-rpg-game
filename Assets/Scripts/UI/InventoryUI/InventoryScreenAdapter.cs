@@ -33,7 +33,7 @@ namespace UI.InventoryUI
             _equipmentConditionChecker = new EquipmentConditionChecker();
         }
 
-        public override void Initialize()
+        public override void Initialize(List<object> data)
         {
             View.MovingImage.gameObject.SetActive(true);
             InitializeBackPack();
@@ -42,6 +42,7 @@ namespace UI.InventoryUI
             _inventory.EquipmentCnahged += UpdateEquipment;
             View.Show();
             View.CloseClicked += Complete;
+            base.Initialize(data);
         }
 
         public override void Complete()

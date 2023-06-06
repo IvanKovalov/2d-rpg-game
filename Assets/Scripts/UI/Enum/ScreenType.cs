@@ -6,5 +6,6 @@
         Inventory = 1,
         Skills = 2,
         Settings = 3,
+        Quest = 4,
     }
 }

@@ -7,5 +7,6 @@ namespace InputReader
         event Action InventoryRequested;
         event Action SkillWindowRequested;
         event Action SettingsWindowRequested;
+        event Action QuestWindowRequested;
     }
 }
