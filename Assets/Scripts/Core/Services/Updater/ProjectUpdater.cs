@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Core.Services.Updater
@@ -20,6 +21,7 @@ namespace Core.Services.Updater
 
 
         private bool _isPaused;
+        private readonly List<Coroutine> _activeCoroutines = new List<Coroutine>();
 
         public bool IsPaused
         {
@@ -43,6 +45,19 @@ namespace Core.Services.Updater
             {
                 Destroy(gameObject);
             }
+        }
+
+        public void Invoke(Action action, float time)
+        {
+            _activeCoroutines.Add(StartCoroutine(InvokeCoroutine(action, time)));
+        }
+
+        private IEnumerator InvokeCoroutine(Action action, float time)
+        {
+            yield return new WaitForSeconds(time);
+            yield return new WaitUntil((() => !_isPaused));
+            action?.Invoke();
+            _activeCoroutines.RemoveAll(element => element == null);
         }
         
         void IProjectUpdater.StopCoroutine(Coroutine coroutine)

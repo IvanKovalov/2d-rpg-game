@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BattleSystem;
 using Core.Services.Updater;
 using Drawing;
 using Player;
@@ -52,12 +53,14 @@ namespace Core
             }
             _externalDevicesInput = new ExternalDevicesInputReader();
             _disposables.Add(_externalDevicesInput);
-           
+            
+            WeaponsFactory weaponsFactory = new WeaponsFactory(playerEntityBehavior.Attacker);
+            
             _playerSystem = new PlayerSystem(playerEntityBehavior, new List<IEntityInputSource>
             {
                 _gameUIInputView,
                 _externalDevicesInput
-            });
+            }, weaponsFactory);
             
             _disposables.Add(_playerSystem);
 
