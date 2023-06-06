@@ -1,4 +1,4 @@
-﻿namespace Quests.Enums
+namespace Quests.Enums
 {
     public enum QuestId
     {

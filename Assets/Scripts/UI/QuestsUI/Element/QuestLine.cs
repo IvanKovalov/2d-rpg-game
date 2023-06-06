@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using Core.ObjectPool;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+
 namespace UI.QuestsUI.Element
 {
     public class QuestLine : MonoBehaviour, IPoolable

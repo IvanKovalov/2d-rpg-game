@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using Items.Enums;
 using UnityEngine;
+
 namespace Items.Data
 {
     [Serializable]

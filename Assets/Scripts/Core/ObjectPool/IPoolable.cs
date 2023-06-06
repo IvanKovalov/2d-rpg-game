@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using UnityEngine;
+
 namespace Core.ObjectPool
 {
     public interface IPoolable

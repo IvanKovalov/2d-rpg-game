@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Core.StatSystem;
 using Items.Data;
 using UnityEngine;
+
 namespace Quests.Data
 {
     [Serializable]
@@ -10,11 +11,13 @@ namespace Quests.Data
     {
         [field: SerializeField] public List<ItemsAmount> Items { get; private set; }
         [field: SerializeField] public List<StatModificator> Stats { get; private set; }
+
         public List<string> GetRewardsTexts()
         {
             var texts = new List<string>();
             foreach (var item in Items)
                 texts.Add($"{item.ItemId}: {item.Amount}");
+
             foreach (var stat in Stats)
             {
                 var increase = stat.Type == StatModificatorType.Additive ? "+" : "+%";
@@ -25,6 +28,7 @@ namespace Quests.Data
                 }
                 texts.Add(text);
             }
+            
             return texts;
         }
     }
