@@ -12,7 +12,7 @@ namespace InputReader
         [SerializeField] private Button _attackButton;
         [SerializeField] private Button _inventoryButton;
         [SerializeField] private Button _spawnButton;
-        
+
         public float HorizontalDirection => _joystick.Horizontal;
         public float VerticalDirection => _joystick.Vertical;
         
@@ -37,6 +37,8 @@ namespace InputReader
         {
             _jumpButton.onClick.RemoveAllListeners();
             _attackButton.onClick.RemoveAllListeners();
+            _inventoryButton.onClick.RemoveAllListeners();
+            _spawnButton.onClick.RemoveAllListeners();
         }
         
         public void ResetOneTimeAction()
