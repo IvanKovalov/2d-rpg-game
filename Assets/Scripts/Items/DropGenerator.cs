@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Core.Services.Updater;
+using InputReader;
 using Items.Data;
 using Items.Enums;
 using Player;
@@ -13,12 +14,15 @@ namespace Items
         private PlayerEntityBehavior playerEntityBehavior;
         private List<ItemDescriptor> _itemDescriptors;
         private ItemsSystem _itemsSystem;
+        private GameUIInputView _gameUIInputView;
 
-        public DropGenerator(List<ItemDescriptor> itemDescriptors, PlayerEntityBehavior playerEntityBehavior, ItemsSystem itemsSystem)
+        public DropGenerator(List<ItemDescriptor> itemDescriptors, PlayerEntityBehavior playerEntityBehavior, ItemsSystem itemsSystem, GameUIInputView gameUIInputView)
         {
             this.playerEntityBehavior = playerEntityBehavior;
             _itemDescriptors = itemDescriptors;
             _itemsSystem = itemsSystem;
+            _gameUIInputView = gameUIInputView;
+            _gameUIInputView.DropRequested += DropRandomItem;
             ProjectUpdater.Instance.UpdateCalled += Update;
         }
 

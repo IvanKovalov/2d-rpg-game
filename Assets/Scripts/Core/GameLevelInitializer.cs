@@ -69,7 +69,7 @@ namespace Core
             _itemsSystem = new ItemsSystem(rarityColors, _whatIsPlayer, itemsFactory, _playerSystem.Inventory);
             List<ItemDescriptor> descriptors =
                 _itemStorage.ItemScriptables.Select(scriptable => scriptable.ItemDescriptor).ToList();
-            _dropGenerator = new DropGenerator(descriptors, playerEntityBehavior, _itemsSystem);
+            _dropGenerator = new DropGenerator(descriptors, playerEntityBehavior, _itemsSystem, _gameUIInputView);
 
             UIContext.Data data =
                 new UIContext.Data(_playerSystem.Inventory, _rarityDescriptorsStorage.RarityDescriptors);
