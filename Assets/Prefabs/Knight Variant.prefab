@@ -740,7 +740,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Animator: {fileID: 2284848467076107103}
   _sortingGroup: {fileID: 0}
-  _afterAttackDelay: 30
+  _afterAttackDelay: 60
   _collider2D: {fileID: 5530271621849835592}
   _attackPoint: {fileID: 710942969876834669}
   _attackRadius: 0.21

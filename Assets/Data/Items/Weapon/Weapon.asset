@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponDecDescriptor:
     <ItemId>k__BackingField: 11
-    <Type>k__BackingField: 1
-    <ItemSprite>k__BackingField: {fileID: 21300000, guid: 15bbbfdfa172f0048b3e3ba8ceab6e6d, type: 3}
-    <ItemRarity>k__BackingField: 2
+    <Type>k__BackingField: 2
+    <ItemSprite>k__BackingField: {fileID: 21300000, guid: 0ab18b7d2c4a998418254f2501f6b544, type: 3}
+    <ItemRarity>k__BackingField: 1
     <Price>k__BackingField: 50
     <Level>k__BackingField: 0
     <Stats>k__BackingField: []
