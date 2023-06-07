@@ -1,6 +1,7 @@
 ﻿using Core.Movement.Data;
 using Core.StatSystem;
 using Core.StatSystem.Enums;
+using Core.Tools;
 using UnityEngine;
 
 namespace Core.Movement.Controller
@@ -13,15 +14,15 @@ namespace Core.Movement.Controller
 
         private Vector2 _movement;
 
-        public bool _faceRight { get; set; }
         public bool IsMoving => _movement.magnitude > 0;
-        
+        public Direction Direction { get; private set; }
+
         public DirectionalMover(Rigidbody2D rigidbody2D, IStatValueGiver statValueGiver)
         {
             _rigidbody = rigidbody2D;
             _transform = rigidbody2D.transform;
             _statValueGiver = statValueGiver;
-            _faceRight = true;
+            // Direction = true;
         }
         
         public void MoveHorizontally(float direction)
@@ -43,16 +44,16 @@ namespace Core.Movement.Controller
 
         }
         
-
-        private void SetDirrection (float direction) {
-            if ((_faceRight && direction < 0) || (!_faceRight && direction > 0)) {
+        private void SetDirrection (float direction) 
+        {
+            if ((Direction == Direction.Right && direction < 0) ||
+                (Direction == Direction.Left && direction > 0))
                 Flip();
-            }
         }
 
         private void Flip() {
-            _transform.Rotate(0, 180, 0);
-            _faceRight = !_faceRight;
+            _transform.Rotate(0,180,0);
+            Direction = Direction == Direction.Right ? Direction.Left : Direction.Right;
         }
     }
 }

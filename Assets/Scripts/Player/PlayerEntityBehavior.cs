@@ -4,6 +4,7 @@ using BattleSystem;
 using Core.Movement.Controller;
 using Core.Movement.Data;
 using Core.StatSystem;
+using Core.Tools;
 using Drawing;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -22,6 +23,7 @@ namespace Player
     [SerializeField] private SortingGroup _sortingGroup;
     [field: SerializeField] public Slider HpBar { get; private set; }
     [field: SerializeField] public Attacker Attacker { get; private set; }
+    [SerializeField] private DirectionalCameraPair _cameras;
 
     private Rigidbody2D _rigidbody;
     private bool _isJump;
@@ -152,6 +154,13 @@ namespace Player
         _jumper.UpdateJump();
       }
       UpdateAnimations();
+      UpdateCameras();
+    }
+    
+    private void UpdateCameras()
+    {
+      foreach (var cameraPair in _cameras.DirectionalCameras)
+        cameraPair.Value.enabled = cameraPair.Key == _directionalMover.Direction;
     }
 
     private void UpdateAnimations()
