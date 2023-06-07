@@ -17,6 +17,7 @@ namespace NPC.Behaviour
     protected Rigidbody2D Rigidbody;
     protected NPCDirectionalMover DirectionalMover;
     private AnimationType _currentAnimationType;
+    protected bool _isDead = false;
 
     public event Action ActionRequested;
     public event Action AnimationEnded;
@@ -44,6 +45,11 @@ namespace NPC.Behaviour
     public void TakeDamage(float damage)
     {
       DamageTaken?.Invoke(damage);
+    }
+
+    public bool IsDead()
+    {
+      return _isDead;
     }
 
     protected virtual void UpdateAnimations()
@@ -106,7 +112,8 @@ namespace NPC.Behaviour
 
     protected void PlayAnimation(AnimationType animationType)
     {
-      Animator.SetInteger(nameof(AnimationType), (int)animationType);
+      if(Animator != null)
+        Animator.SetInteger(nameof(AnimationType), (int)animationType);
     }
 
     protected void OnActionRequested() => ActionRequested?.Invoke();

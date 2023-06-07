@@ -23,11 +23,13 @@ namespace BattleSystem.Weapon
 
         public override void EndAttack()
         {
+            
             if(_attacker.Targets.Count < 1)
                 return;
             
-            _attacker.Targets[0].TakeDamage(_damage);
-            //_attacker.Reset();
+            var target = _attacker.Targets.Find(target => target != null && !target.IsDead());
+            //_attacker.Targets[0].TakeDamage(_damage);
+            target.TakeDamage(_damage);
         }
     }
 }

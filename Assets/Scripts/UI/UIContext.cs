@@ -29,6 +29,7 @@ namespace UI
             foreach (IWindowsInputSource inputSource in _inputSources)
             {
                 inputSource.InventoryRequested += OpenInventory;
+                inputSource.QuestWindowRequested += OnQuestWindowWindowRequested;
             }
 
             GameObject container = new GameObject()
@@ -60,6 +61,7 @@ namespace UI
         }
 
         private void OpenInventory() => OpenScreen(ScreenType.Inventory);
+        private void OnQuestWindowWindowRequested() => OpenScreen(ScreenType.Quest);
 
         private void OpenScreen(ScreenType screenType)
         {
@@ -74,7 +76,7 @@ namespace UI
             }
 
             _currentController = screenController;
-            _currentController.Initialize();
+            //_currentController.Initialize(); //when add quick system
         }
 
         private IScreenController GetPresenter(ScreenType screenType)
@@ -83,6 +85,8 @@ namespace UI
             {
                 case ScreenType.Inventory:
                     return new InventoryScreenAdapter(GetView<InventoryScreenView>(screenType), _data.Inventory, _data.RarityDescriptors);
+                /*case ScreenType.Quest:
+                    return new QuestsScreenAdapter(GetView<QuestsScreenView>(screenType), );*/ //when add quick system
                 default:
                     throw new NullReferenceException();
             }

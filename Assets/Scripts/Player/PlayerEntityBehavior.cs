@@ -8,6 +8,7 @@ using Drawing;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
+using QuestSystem;
 using AnimatorController = Core.Animations.AnimatorController;
 
 namespace Player
@@ -29,8 +30,11 @@ namespace Player
     private DirectionalMover _directionalMover;
     private Jumper _jumper;
     private AnimationType _currenAnimationtype;
+    private bool _isDead = false;
 
     public float VerticalPosition => _rigidbody.position.y;
+
+    public Quest activeQuest;
 
     public event Action ActionRequested;
     public event Action AnimationEnded;
@@ -132,6 +136,7 @@ namespace Player
     }
     private IEnumerator Death()
     {
+      _isDead = true;
       yield return new WaitForSeconds(1f);
       Destroy(gameObject);
     }
@@ -162,6 +167,11 @@ namespace Player
     public void TakeDamage(float damage)
     {
       DamageTaken?.Invoke(damage);
+    }
+
+    public bool IsDead()
+    {
+      return _isDead;
     }
   }
 }

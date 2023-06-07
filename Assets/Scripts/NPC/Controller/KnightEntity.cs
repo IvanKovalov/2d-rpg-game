@@ -40,6 +40,7 @@ namespace NPC.Controller
       var speed = StatsController.GetStatValue(StatType.Speed) * Time.fixedDeltaTime;
       _delta = new Vector2(speed, speed / 2);
       ObjectDied += OnDead;
+      SubscribeToKillingQuest(_knightEntityBehaviour.GetPlayer());
     }
 
     private void OnDamageTaken(float damage)
@@ -54,24 +55,22 @@ namespace NPC.Controller
       _hp = Mathf.Clamp(_hp - damage, 0, _hp);
       Debug.Log(_hp);
       VisualiseHp(_hp);
-      if (_hp <= 0)
-      {
-        //ObjectDied += OnDead;
-        //ObjectDied?.Invoke(this);
-        OnDead(this);
-        _knightEntityBehaviour.TriggerDeathCor();
-      }
+      // if (_hp <= 0)
+      // {
+      //   //OnDead(this);
+
+      // }
     }
 
     private void OnAttacked(IDamageable target)
     {
-      Debug.Log("1 damage");
       target.TakeDamage(StatsController.GetStatValue(StatType.Damage));
     }
 
     private void OnDead(Entity entity)
     {
       _knightEntityBehaviour.PlayAnimation(AnimationType.Death, true);
+      _knightEntityBehaviour.TriggerDeathCor();
     }
 
     private IEnumerator Coroutine()
@@ -225,6 +224,14 @@ namespace NPC.Controller
         _knightEntityBehaviour.HpBar.value = hp;
 
       _knightEntityBehaviour.HpBar.value = hp;
+    }
+    public void SubscribeToKillingQuest(PlayerEntityBehavior player)
+    {
+      ObjectDied -= player.activeQuest.goal.EnemyKilled;
+      if (player.activeQuest == null || !player.activeQuest.isActive)
+        return;
+      ObjectDied += player.activeQuest.goal.EnemyKilled;
+
     }
   }
 }
