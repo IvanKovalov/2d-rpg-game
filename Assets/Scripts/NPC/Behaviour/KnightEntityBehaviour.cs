@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using BattleSystem;
+using Core;
 using Core.Enums;
 using Core.Movement.Controller;
 using Player;
@@ -82,6 +83,14 @@ namespace NPC.Behaviour
     public void TriggerDeathCor()
     {
       StartCoroutine(Death());
+    }
+    public PlayerEntityBehavior GetPlayer()
+    {
+      return FindObjectOfType<PlayerEntityBehavior>();
+    }
+    public GameLevelInitializer GetLevelInitializer()
+    {
+      return FindObjectOfType<GameLevelInitializer>();
     }
   }
 }
