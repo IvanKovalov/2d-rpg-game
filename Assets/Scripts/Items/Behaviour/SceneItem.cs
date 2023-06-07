@@ -2,7 +2,7 @@ using System;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using Button = UnityEngine.UI.Button;
 using Random = UnityEngine.Random;
 
 namespace Items.Behaviour
@@ -93,9 +93,18 @@ namespace Items.Behaviour
 
         private void UpdateSize()
         {
+          
             float verticalDelta = _maxVerticalPosition - _itemTransform.position.y;
             float currentSizeModificator = _minSize + _sizeModificator * verticalDelta;
-            _itemTransform.localScale = Vector2.one * currentSizeModificator;
+            if (_text.text == "DragonSword" || _text.text == "IronSword")
+            {
+                _itemTransform.localScale = Vector2.one * currentSizeModificator * 5;
+            }
+            else
+            {
+                _itemTransform.localScale = Vector2.one * currentSizeModificator;
+            }
+           
         }
     }
 }

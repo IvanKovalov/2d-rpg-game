@@ -9,7 +9,7 @@ namespace Core.Movement.Controller
     {
         private readonly JumpData _jumpData;
         private readonly Rigidbody2D _rigidbody;
-        private readonly float _maxVerticalSize;
+       
         private readonly Transform _transform;
         private readonly IStatValueGiver _statValueGiver;
 
@@ -17,11 +17,10 @@ namespace Core.Movement.Controller
         
         public bool isJump { get; private set; }
 
-        public Jumper(Rigidbody2D rigidbody2D, JumpData jumpData, float maxVerticalSize, IStatValueGiver statValueGiver)
+        public Jumper(Rigidbody2D rigidbody2D, JumpData jumpData,  IStatValueGiver statValueGiver)
         {
             _rigidbody = rigidbody2D;
             _jumpData = jumpData;
-            _maxVerticalSize = maxVerticalSize;
             _transform = _rigidbody.transform;
             _statValueGiver = statValueGiver;
         }

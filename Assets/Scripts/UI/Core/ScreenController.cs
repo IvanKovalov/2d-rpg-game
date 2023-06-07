@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UI.Enum;
 
 namespace UI.Core
@@ -12,7 +13,7 @@ namespace UI.Core
         public event Action CloseRequested;
         public event Action<ScreenType> OpenScreenRequested;
 
-        public virtual void Initialize() => View.Show();
+        public virtual void Initialize(List<object> data) => View.Show();
         public virtual void Complete() => View.Hide();
 
         protected void RequestClose() => CloseRequested?.Invoke();
