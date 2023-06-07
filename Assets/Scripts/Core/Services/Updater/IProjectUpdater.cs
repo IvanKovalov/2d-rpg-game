@@ -11,5 +11,6 @@ namespace Core.Services.Updater
         event Action LateUpdateCalled;
         Coroutine StartCoroutine(IEnumerator coroutine);
         void StopCoroutine(Coroutine coroutine);
+        void Invoke(Action action, float time);
     }
 }

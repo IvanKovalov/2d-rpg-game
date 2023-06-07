@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Core.Services.Updater;
+using InputReader;
 using Items.Data;
 using Items.Enums;
 using Player;
@@ -13,23 +14,26 @@ namespace Items
         private PlayerEntityBehavior playerEntityBehavior;
         private List<ItemDescriptor> _itemDescriptors;
         private ItemsSystem _itemsSystem;
+        private GameUIInputView _gameUIInputView;
 
-        public DropGenerator(List<ItemDescriptor> itemDescriptors, PlayerEntityBehavior playerEntityBehavior, ItemsSystem itemsSystem)
+        public DropGenerator(List<ItemDescriptor> itemDescriptors, PlayerEntityBehavior playerEntityBehavior, ItemsSystem itemsSystem, GameUIInputView gameUIInputView)
         {
             this.playerEntityBehavior = playerEntityBehavior;
             _itemDescriptors = itemDescriptors;
             _itemsSystem = itemsSystem;
+            _gameUIInputView = gameUIInputView;
+            _gameUIInputView.DropRequested += DropRandomItem;
             ProjectUpdater.Instance.UpdateCalled += Update;
         }
 
-        private void DropRandomItem(ItemRarity rarity)
+        public void DropRandomItem(ItemRarity rarity)
         {
             List<ItemDescriptor> items = _itemDescriptors.Where(item => item.ItemRarity == rarity).ToList();
             ItemDescriptor itemDescriptor = items[Random.Range(0, items.Count())];
             _itemsSystem.DropItem(itemDescriptor, playerEntityBehavior.transform.position + Vector3.one);
         }
 
-        private ItemRarity GetDropRarity()
+        public ItemRarity GetDropRarity()
         {
             float chance = Random.Range(0, 100);
             return chance switch

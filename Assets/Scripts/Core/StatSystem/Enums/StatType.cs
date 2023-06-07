@@ -10,5 +10,6 @@
         Defence = 5,
         Speed = 6,
         JumpForce = 7,
+        AfterAttackDelay = 8,
     }
 }
