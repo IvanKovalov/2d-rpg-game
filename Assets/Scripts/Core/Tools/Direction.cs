@@ -1,7 +1,8 @@
 namespace Core.Tools
 {
-    public class Direction
+    public enum Direction
     {
-        
+        Right = 0,
+        Left = 1,
     }
 }
