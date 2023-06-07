@@ -30,7 +30,7 @@ namespace Core
         private ExternalDevicesInputReader _externalDevicesInput;
         private PlayerSystem _playerSystem;
         private ProjectUpdater _projectUpdater;
-        private ItemsSystem _itemsSystem;
+        public ItemsSystem _itemsSystem;
         private DropGenerator _dropGenerator;
         private UIContext _uiContext;
         private LevelDrawer _levelDrawer;
