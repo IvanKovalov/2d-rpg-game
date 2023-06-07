@@ -11,6 +11,7 @@ namespace InputReader
         [SerializeField] private Button _jumpButton;
         [SerializeField] private Button _attackButton;
         [SerializeField] private Button _inventoryButton;
+        [SerializeField] private Button _spawnButton;
         
         public float HorizontalDirection => _joystick.Horizontal;
         public float VerticalDirection => _joystick.Vertical;
@@ -22,11 +23,14 @@ namespace InputReader
         public event Action SkillWindowRequested;
         public event Action SettingsWindowRequested;
         public event Action QuestWindowRequested;
+        public event Action SpawnRequested; 
 
         private void Awake()
         {
             _jumpButton.onClick.AddListener(()=> Jump = true);
             _attackButton.onClick.AddListener(() => Attack = true);
+            _inventoryButton.onClick.AddListener(() => InventoryRequested?.Invoke());
+            _spawnButton.onClick.AddListener(() => SpawnRequested?.Invoke());
         }
 
         private void OnDestroy()
