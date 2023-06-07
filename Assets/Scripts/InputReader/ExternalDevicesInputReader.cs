@@ -14,6 +14,7 @@ public class ExternalDevicesInputReader : IEntityInputSource, IWindowsInputSourc
     public event Action InventoryRequested;
     public event Action SkillWindowRequested;
     public event Action SettingsWindowRequested;
+    public event Action QuestWindowRequested;
 
     public ExternalDevicesInputReader()
     {
@@ -46,6 +47,10 @@ public class ExternalDevicesInputReader : IEntityInputSource, IWindowsInputSourc
             InventoryRequested?.Invoke();
         }
         
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            QuestWindowRequested?.Invoke();
+        }
         
     }
 

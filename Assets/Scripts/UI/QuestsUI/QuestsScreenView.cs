@@ -1,9 +1,9 @@
-using TMPro;
+﻿using TMPro;
 using UI.Core;
 using UI.QuestsUI.Element;
 using UnityEngine;
 
-namespace UI.QuestsUi.View
+namespace UI.QuestsUI
 {
     public class QuestsScreenView : ScreenView
     {

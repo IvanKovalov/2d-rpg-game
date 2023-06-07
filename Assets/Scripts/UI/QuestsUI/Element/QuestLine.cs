@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.QuestsUi.Element
+namespace UI.QuestsUI.Element
 {
     public class QuestLine : MonoBehaviour, IPoolable
     {
@@ -18,10 +18,8 @@ namespace UI.QuestsUi.Element
         
         public event Action<IPoolable> Destroyed;
         public event Action<QuestLine> Selected;
-
         private void Awake() => _button.onClick.AddListener(() => Selected?.Invoke(this));
         private void OnDestroy() => _button.onClick.RemoveAllListeners();
-
         public void SetQuest(string questName) => _questName.text = questName;
         public void SetSelected(bool selected) => _backImage.color = selected ? _selectedColor : _notSelectedColor;
         

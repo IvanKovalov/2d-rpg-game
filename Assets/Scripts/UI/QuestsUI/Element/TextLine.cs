@@ -2,8 +2,7 @@ using System;
 using Core.ObjectPool;
 using TMPro;
 using UnityEngine;
-
-namespace UI.QuestsUi.Element
+namespace UI.QuestsUI.Element
 {
     public class TextLine : MonoBehaviour, IPoolable
     {

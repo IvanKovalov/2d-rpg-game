@@ -17,18 +17,18 @@ namespace Quests.Data
             var texts = new List<string>();
             foreach (var item in Items)
                 texts.Add($"{item.ItemId}: {item.Amount}");
-            
-            foreach (var statModificator in Stats)
+
+            foreach (var stat in Stats)
             {
-                var increase = statModificator.Type == StatModificatorType.Additive ? "+" : "+%";
-                var text = $"{statModificator.Stat.Type} {increase} {statModificator.Stat.Value}";
-                if (statModificator.Duration > 0)
+                var increase = stat.Type == StatModificatorType.Additive ? "+" : "+%";
+                var text = $"{stat.Stat.Type} {increase} {stat.Stat.Value}";
+                if (stat.Duration > 0)
                 {
-                    text = $"Increase for {statModificator.Duration} seconds of {text}";
+                    text = $"Increase for {stat.Duration} seconds of {text}";
                 }
                 texts.Add(text);
             }
-
+            
             return texts;
         }
     }

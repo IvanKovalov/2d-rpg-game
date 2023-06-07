@@ -21,6 +21,7 @@ namespace InputReader
         public event Action InventoryRequested;
         public event Action SkillWindowRequested;
         public event Action SettingsWindowRequested;
+        public event Action QuestWindowRequested;
 
         private void Awake()
         {
