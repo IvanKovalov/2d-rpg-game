@@ -6,5 +6,6 @@ namespace BattleSystem
     {
         event Action<float> DamageTaken;
         void TakeDamage(float damage);
+        bool IsDead();
     }
 }
