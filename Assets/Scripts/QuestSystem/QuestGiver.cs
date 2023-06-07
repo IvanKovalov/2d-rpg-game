@@ -4,6 +4,7 @@ using Player;
 using UnityEngine;
 using TMPro;
 using NPC.Enums;
+using UnityEngine.UI;
 
 namespace QuestSystem
 {
@@ -16,6 +17,7 @@ namespace QuestSystem
     [SerializeField] private TextMeshProUGUI title;
     [SerializeField] private TextMeshProUGUI description;
     [SerializeField] private TextMeshProUGUI goldText;
+    [SerializeField] private Button _questButton;
     public void OpenQuestWindow()
     {
       questWindow.SetActive(true);
@@ -38,5 +40,11 @@ namespace QuestSystem
         OpenQuestWindow();
       }
     }
+    
+    private void Awake()
+    {
+       _questButton.onClick.AddListener(() => OpenQuestWindow());
+    }
+    
   }
 }
