@@ -29,7 +29,7 @@ namespace BattleSystem.Weapon
             
             var target = _attacker.Targets.Find(target => target != null && !target.IsDead());
             //_attacker.Targets[0].TakeDamage(_damage);
-            target.TakeDamage(_damage);
+            target?.TakeDamage(_damage);
         }
     }
 }

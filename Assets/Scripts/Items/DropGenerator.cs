@@ -22,14 +22,14 @@ namespace Items
             ProjectUpdater.Instance.UpdateCalled += Update;
         }
 
-        private void DropRandomItem(ItemRarity rarity)
+        public void DropRandomItem(ItemRarity rarity)
         {
             List<ItemDescriptor> items = _itemDescriptors.Where(item => item.ItemRarity == rarity).ToList();
             ItemDescriptor itemDescriptor = items[Random.Range(0, items.Count())];
             _itemsSystem.DropItem(itemDescriptor, playerEntityBehavior.transform.position + Vector3.one);
         }
 
-        private ItemRarity GetDropRarity()
+        public ItemRarity GetDropRarity()
         {
             float chance = Random.Range(0, 100);
             return chance switch

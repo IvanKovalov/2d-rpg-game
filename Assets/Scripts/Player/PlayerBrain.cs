@@ -96,6 +96,7 @@ namespace Player
         weapon = _inventory.Equipment.Find(element => element.IsWeapon());
         if (weapon != null)
         {
+          _canAttack = false;
           _currWeapon = _weaponsFactory.GetWeapon(weapon.Descriptor.ItemId);
           playerEntityBehavior.StartAttck();
         }
