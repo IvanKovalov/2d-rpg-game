@@ -75,6 +75,7 @@ namespace NPC.Behaviour
     }
     private IEnumerator Death()
     {
+      _isDead = true;
       yield return new WaitForSeconds(1f);
       Destroy(gameObject);
     }

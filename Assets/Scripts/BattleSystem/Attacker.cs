@@ -11,6 +11,7 @@ namespace BattleSystem
         
         private void OnTriggerEnter2D(Collider2D other)
         {
+            //Reset();
             if(other.TryGetComponent(out IDamageable damageable) && !Targets.Contains(damageable))
                 Targets.Add(damageable);
         }
