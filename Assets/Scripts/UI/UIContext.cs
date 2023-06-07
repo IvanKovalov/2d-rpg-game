@@ -76,7 +76,7 @@ namespace UI
             }
 
             _currentController = screenController;
-            //_currentController.Initialize(); //when add quick system
+            _currentController.Initialize(new List<object>()); //when add quick system
         }
 
         private IScreenController GetPresenter(ScreenType screenType)
